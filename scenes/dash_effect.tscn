@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwfchta6uw7pc"]
+
+[ext_resource type="Texture2D" uid="uid://bmwc6qkgwfnb1" path="res://assets/sprites/dash_trail.png" id="1_cke4v"]
+
+[sub_resource type="Gradient" id="Gradient_vrja2"]
+colors = PackedColorArray(1, 1, 1, 0.588235, 1, 1, 1, 0)
+
+[node name="dash_effect" type="CPUParticles2D"]
+z_index = -1
+scale = Vector2(4, 4)
+emitting = false
+amount = 4
+lifetime = 0.2
+one_shot = true
+texture = ExtResource("1_cke4v")
+gravity = Vector2(0, 0)
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+color_ramp = SubResource("Gradient_vrja2")

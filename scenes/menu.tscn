@@ -1,0 +1,245 @@
+[gd_scene load_steps=30 format=3 uid="uid://5cc0kpjqlxnw"]
+
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_3psy6"]
+[ext_resource type="Texture2D" uid="uid://bcqop8hnrh58e" path="res://assets/sprites/menu/mainmenuWIP.png" id="2_fc0x5"]
+[ext_resource type="Texture2D" uid="uid://dhhejbplw88w8" path="res://assets/sprites/menu/menuLogopng.png" id="3_5nac1"]
+[ext_resource type="Texture2D" uid="uid://dbthsp3tjsic1" path="res://assets/sprites/menu/backbutton.png" id="3_wfs6x"]
+[ext_resource type="Texture2D" uid="uid://d3og5s6cc6hly" path="res://assets/sprites/menu/ranger_mainmenu.png" id="4_6ljxj"]
+[ext_resource type="Texture2D" uid="uid://uhud0mrk1okd" path="res://assets/sprites/menu/knight_shadow.png" id="4_p7d5y"]
+[ext_resource type="PackedScene" uid="uid://jd12cjpef0op" path="res://scenes/campfire.tscn" id="6_rrowy"]
+[ext_resource type="Texture2D" uid="uid://phwy4c07s3w4" path="res://assets/sprites/menu/char_selection_bg.png" id="8_e8cv2"]
+[ext_resource type="PackedScene" uid="uid://df3ceyamhk27c" path="res://scenes/character_button_template.tscn" id="9_gpab3"]
+[ext_resource type="Texture2D" uid="uid://mttmqskio8vb" path="res://assets/sprites/characters/ranger/ranger.png" id="10_so5k8"]
+[ext_resource type="PackedScene" uid="uid://cy3pyishblou5" path="res://scenes/characters/ranger/ranger.tscn" id="11_nigrf"]
+[ext_resource type="Texture2D" uid="uid://jv0ddyi6vvib" path="res://assets/sprites/characters/ranger/ranger_idle.png" id="11_vlk62"]
+[ext_resource type="PackedScene" uid="uid://bql6jextevy1h" path="res://scenes/characters/knight/knight.tscn" id="13_5eepf"]
+[ext_resource type="Texture2D" uid="uid://cjeejfsddib3c" path="res://assets/sprites/characters/knight/char_selection_knight.png" id="14_5rtl5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isil8"]
+atlas = ExtResource("4_p7d5y")
+region = Rect2(0, 0, 50, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvo55"]
+atlas = ExtResource("4_p7d5y")
+region = Rect2(50, 0, 50, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jjow1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isil8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvo55")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybir7"]
+atlas = ExtResource("4_6ljxj")
+region = Rect2(0, 0, 35, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5idx"]
+atlas = ExtResource("4_6ljxj")
+region = Rect2(35, 0, 35, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_460je"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybir7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5idx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_bnd57"]
+resource_name = "move_cam"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 1296)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w1l1c"]
+_data = {
+"move_cam": SubResource("Animation_bnd57")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_plkay"]
+atlas = ExtResource("11_vlk62")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nh6j"]
+atlas = ExtResource("11_vlk62")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rvdyw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plkay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nh6j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3rll"]
+atlas = ExtResource("14_5rtl5")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8kcx"]
+atlas = ExtResource("14_5rtl5")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_es3q1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3rll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v8kcx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Environment" id="Environment_k18mv"]
+ambient_light_color = Color(0.237539, 0.237539, 0.237539, 1)
+ambient_light_energy = 1.1
+glow_enabled = true
+
+[node name="menu" type="Node2D"]
+script = ExtResource("1_3psy6")
+
+[node name="upmenu" type="Node2D" parent="."]
+
+[node name="mainmenybg" type="Sprite2D" parent="upmenu"]
+scale = Vector2(3, 3)
+texture = ExtResource("2_fc0x5")
+centered = false
+
+[node name="start" type="Button" parent="upmenu"]
+offset_left = 21.0
+offset_top = 593.0
+offset_right = 247.0
+offset_bottom = 624.0
+text = "start"
+
+[node name="title" type="Sprite2D" parent="upmenu"]
+position = Vector2(213, 209)
+scale = Vector2(3, 3)
+texture = ExtResource("3_5nac1")
+
+[node name="knight" type="AnimatedSprite2D" parent="upmenu"]
+position = Vector2(425, 447)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_jjow1")
+frame_progress = 0.845282
+
+[node name="ranger" type="AnimatedSprite2D" parent="upmenu"]
+position = Vector2(211, 401)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_460je")
+frame_progress = 0.62933
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_w1l1c")
+}
+
+[node name="cameraDown" type="Camera2D" parent="."]
+position = Vector2(0, 1296)
+anchor_mode = 0
+
+[node name="char_selection" type="Node2D" parent="."]
+
+[node name="bg" type="Sprite2D" parent="char_selection"]
+position = Vector2(576, 1620)
+scale = Vector2(4, 4)
+texture = ExtResource("8_e8cv2")
+
+[node name="campfire" parent="char_selection" instance=ExtResource("6_rrowy")]
+position = Vector2(600, 1599)
+
+[node name="backbutton" type="TextureButton" parent="char_selection"]
+offset_left = 1094.0
+offset_top = 1316.0
+offset_right = 1110.0
+offset_bottom = 1332.0
+scale = Vector2(3, 3)
+texture_normal = ExtResource("3_wfs6x")
+texture_hover = ExtResource("3_wfs6x")
+
+[node name="characters" type="Node2D" parent="char_selection"]
+
+[node name="ranger" type="Node2D" parent="char_selection/characters"]
+
+[node name="character_button_template" parent="char_selection/characters/ranger" instance=ExtResource("9_gpab3")]
+offset_left = 568.0
+offset_top = 1863.0
+offset_right = 584.0
+offset_bottom = 1895.0
+scale = Vector2(3, 3)
+pivot_offset = Vector2(8.545, 20)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 0.396078)
+icon = ExtResource("10_so5k8")
+character = ExtResource("11_nigrf")
+character_index = 1
+
+[node name="sprite" type="AnimatedSprite2D" parent="char_selection/characters/ranger/character_button_template"]
+position = Vector2(8, 16)
+sprite_frames = SubResource("SpriteFrames_rvdyw")
+autoplay = "default"
+
+[node name="knight" type="Node2D" parent="char_selection/characters"]
+
+[node name="character_button_template" parent="char_selection/characters/knight" instance=ExtResource("9_gpab3")]
+offset_left = 4.0
+offset_right = 27.0
+offset_bottom = 31.0
+scale = Vector2(4, 4)
+character = ExtResource("13_5eepf")
+character_index = 2
+
+[node name="sprite" type="AnimatedSprite2D" parent="char_selection/characters/knight/character_button_template"]
+position = Vector2(15, 15)
+sprite_frames = SubResource("SpriteFrames_es3q1")
+autoplay = "default"
+
+[node name="play_button" type="Button" parent="char_selection"]
+offset_left = 538.0
+offset_top = 1565.0
+offset_right = 660.0
+offset_bottom = 1637.0
+text = "play"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_k18mv")
+
+[connection signal="pressed" from="upmenu/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="char_selection/backbutton" to="." method="_on_backbutton_pressed"]
+[connection signal="pressed" from="char_selection/play_button" to="." method="_on_play_button_pressed"]

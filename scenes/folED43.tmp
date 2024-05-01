@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://puifgcmtkdjo"]
+
+[ext_resource type="Script" path="res://following_enemy.gd" id="1_wb44g"]
+[ext_resource type="Texture2D" uid="uid://ccs74r3r2laj4" path="res://assets/sprites/enemies/following_enemy.png" id="2_efds4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2mow"]
+size = Vector2(32, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_td088"]
+radius = 7.07107
+
+[node name="following_enemy" type="CharacterBody2D" node_paths=PackedStringArray("knockback_timer") groups=["enemy"]]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_wb44g")
+health = 5
+speed = 80.0
+knockback_timer = NodePath("knockback_timer")
+
+[node name="sprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_efds4")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+shape = SubResource("RectangleShape2D_g2mow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+shape = SubResource("CircleShape2D_td088")
+
+[node name="knockback_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

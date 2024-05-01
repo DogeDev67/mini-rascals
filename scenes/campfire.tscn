@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://jd12cjpef0op"]
+
+[ext_resource type="Texture2D" uid="uid://c3gkbrp0nidu8" path="res://assets/sprites/menu/campfire.png" id="1_1nid1"]
+
+[sub_resource type="Gradient" id="Gradient_dlx5o"]
+offsets = PackedFloat32Array(0.0233463, 0.256809, 0.735409)
+colors = PackedColorArray(1, 1, 0.298039, 1, 0.939891, 0.939891, 0.280124, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pvyb1"]
+gradient = SubResource("Gradient_dlx5o")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="campfire" type="StaticBody2D"]
+scale = Vector2(3, 3)
+
+[node name="sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -5.5)
+texture = ExtResource("1_1nid1")
+
+[node name="light" type="PointLight2D" parent="."]
+color = Color(1, 0.827451, 0.631373, 1)
+texture = SubResource("GradientTexture2D_pvyb1")
+texture_scale = 3.16

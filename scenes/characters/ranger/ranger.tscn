@@ -1,0 +1,173 @@
+[gd_scene load_steps=15 format=3 uid="uid://cy3pyishblou5"]
+
+[ext_resource type="Script" path="res://scripts/classes/base_character.gd" id="1_7lhuh"]
+[ext_resource type="Texture2D" uid="uid://jv0ddyi6vvib" path="res://assets/sprites/characters/ranger/ranger_idle.png" id="2_nkwv4"]
+[ext_resource type="PackedScene" uid="uid://dlgit4o822ljd" path="res://scenes/weapons/ranged/bow.tscn" id="4_u77g2"]
+[ext_resource type="PackedScene" uid="uid://fbh55g1i5su6" path="res://scenes/projectiles/test_proj.tscn" id="5_bsha4"]
+[ext_resource type="PackedScene" uid="uid://bwfchta6uw7pc" path="res://scenes/dash_effect.tscn" id="5_yw6uo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5gsh"]
+atlas = ExtResource("2_nkwv4")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idk8s"]
+atlas = ExtResource("2_nkwv4")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_flf04"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l5gsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idk8s")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uovxh"]
+radius = 9.0
+height = 56.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_44nga"]
+radius = 12.0416
+
+[sub_resource type="Animation" id="Animation_ln27o"]
+resource_name = "RESET"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprite:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(-0.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_f0kv8"]
+resource_name = "walking"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprite:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0872665, -0.0872665, 0.0872665]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b8i01"]
+_data = {
+"RESET": SubResource("Animation_ln27o"),
+"walking": SubResource("Animation_f0kv8")
+}
+
+[sub_resource type="Gradient" id="Gradient_f5ojb"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="ranger" type="CharacterBody2D" groups=["player"]]
+z_index = 1
+script = ExtResource("1_7lhuh")
+speed = 300
+
+[node name="sprite" type="AnimatedSprite2D" parent="." groups=["player"]]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_flf04")
+animation = &"idle"
+
+[node name="dash_timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="weapon" type="Node2D" parent="."]
+
+[node name="bow" parent="weapon" instance=ExtResource("4_u77g2")]
+projectile = ExtResource("5_bsha4")
+
+[node name="hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+shape = SubResource("CapsuleShape2D_uovxh")
+
+[node name="collisionboxArea" type="Area2D" parent="."]
+
+[node name="collisionbox" type="CollisionShape2D" parent="collisionboxArea"]
+position = Vector2(0, 18)
+shape = SubResource("CircleShape2D_44nga")
+debug_color = Color(0.973788, 0, 0.43148, 0.42)
+
+[node name="collisionbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 18)
+shape = SubResource("CircleShape2D_44nga")
+
+[node name="cam" type="Camera2D" parent="."]
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_b8i01")
+}
+
+[node name="walk_dust" type="CPUParticles2D" parent="."]
+z_as_relative = false
+position = Vector2(0, 27)
+rotation = 3.14159
+emitting = false
+lifetime = 0.2
+explosiveness = 0.5
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 90.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 80.0
+initial_velocity_max = 80.0
+scale_amount_min = 4.0
+scale_amount_max = 8.0
+color_ramp = SubResource("Gradient_f5ojb")
+
+[node name="dash_effect" parent="." instance=ExtResource("5_yw6uo")]

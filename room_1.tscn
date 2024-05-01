@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://jpyujd50mk2l"]
+
+[ext_resource type="Script" path="res://room1.gd" id="1_oesm0"]
+[ext_resource type="Texture2D" uid="uid://bowy0580ponmh" path="res://assets/sprites/tilesetWorld1.png" id="2_crr62"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ttykl"]
+texture = ExtResource("2_crr62")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_1u21p"]
+sources/0 = SubResource("TileSetAtlasSource_ttykl")
+
+[node name="room1" type="Node2D"]
+script = ExtResource("1_oesm0")
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(-32, -128)
+tile_set = SubResource("TileSet_1u21p")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 3, 131072, 0, 65536, 0, 1, 131072, 0, 1, 196608, 0, 1, 262144, 0, 1, 327680, 0, 1, 65539, 131072, 1, 131075, 131072, 1, 196611, 131072, 1, 262147, 131072, 1, 327683, 131072, 1, 393216, 0, 1, 458752, 0, 1, 524288, 0, 1, 589824, 0, 2, 589825, 65536, 2, 589826, 65536, 2, 589827, 65536, 2, 589828, 65536, 2, 589829, 65536, 2, 589830, 65536, 2, 589831, 65536, 2, 589832, 65536, 2, 393220, 65536, 2, 393221, 65536, 2, 393222, 65536, 2, 393219, 0, 2, 393223, 65536, 2, 393224, 65536, 2)
+
+[node name="entrance" type="Node2D" parent="."]
+position = Vector2(0, -128)
+
+[node name="exit" type="Node2D" parent="."]
+position = Vector2(112, 0)

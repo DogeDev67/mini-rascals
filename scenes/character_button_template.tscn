@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://df3ceyamhk27c"]
+
+[ext_resource type="Script" path="res://character_button_template.gd" id="1_kp2k6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pydyl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwr88"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_re35b"]
+bg_color = Color(1, 1, 1, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1c6k"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="character_button_template" type="Button"]
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(20, 20)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pydyl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iwr88")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_re35b")
+theme_override_styles/normal = SubResource("StyleBoxFlat_h1c6k")
+flat = true
+script = ExtResource("1_kp2k6")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

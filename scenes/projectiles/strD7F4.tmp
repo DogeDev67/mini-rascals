@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://elvfhdcpvvq7"]
+
+[ext_resource type="Script" path="res://scripts/bullets/strength_a_world_bullet.gd" id="1_d4cj6"]
+[ext_resource type="Texture2D" uid="uid://uq48schdvn3i" path="res://assets/sprites/projectiles/strength_a_world_bullet.png" id="2_es5r5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rvsww"]
+size = Vector2(16, 1)
+
+[node name="strength_a_world_bullet" type="Area2D"]
+script = ExtResource("1_d4cj6")
+speed = 10.0
+life_time = 0.2
+knockback_force = -100
+
+[node name="sprite" type="Sprite2D" parent="."]
+position = Vector2(8, 0)
+texture = ExtResource("2_es5r5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 0)
+shape = SubResource("RectangleShape2D_rvsww")

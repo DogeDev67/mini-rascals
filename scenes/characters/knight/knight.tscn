@@ -1,0 +1,179 @@
+[gd_scene load_steps=14 format=3 uid="uid://bql6jextevy1h"]
+
+[ext_resource type="Script" path="res://scripts/classes/base_character.gd" id="1_sm461"]
+[ext_resource type="Texture2D" uid="uid://cjeejfsddib3c" path="res://assets/sprites/characters/knight/char_selection_knight.png" id="2_ycttk"]
+[ext_resource type="PackedScene" uid="uid://bwfchta6uw7pc" path="res://scenes/dash_effect.tscn" id="4_tc2un"]
+[ext_resource type="PackedScene" uid="uid://dul57ad4ur571" path="res://scenes/weapons/ranged/test_shotgun.tscn" id="4_xenh6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0013t"]
+atlas = ExtResource("2_ycttk")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkt78"]
+atlas = ExtResource("2_ycttk")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x7vc7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0013t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkt78")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_myuox"]
+radius = 9.0
+height = 56.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3kt5v"]
+radius = 12.0416
+
+[sub_resource type="Animation" id="Animation_ln27o"]
+resource_name = "RESET"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprite:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(-0.1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_f0kv8"]
+resource_name = "walking"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprite:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0872665, -0.0872665, 0.0872665]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b8i01"]
+_data = {
+"RESET": SubResource("Animation_ln27o"),
+"walking": SubResource("Animation_f0kv8")
+}
+
+[sub_resource type="Gradient" id="Gradient_1n6iv"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="knight" type="CharacterBody2D" groups=["player"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_sm461")
+speed = 250
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_x7vc7")
+animation = &"idle"
+
+[node name="dash_timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="weapon" type="Node2D" parent="."]
+
+[node name="shotgun" parent="weapon" node_paths=PackedStringArray("sprite", "cooldown", "aniplayer", "muzzle") instance=ExtResource("4_xenh6")]
+sprite = NodePath("bulletPivot/Sprite2D")
+cooldown = NodePath("cooldown")
+aniplayer = NodePath("AnimationPlayer")
+muzzle = NodePath("bulletPivot/Marker2D")
+
+[node name="hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+shape = SubResource("CapsuleShape2D_myuox")
+
+[node name="collisionboxArea" type="Area2D" parent="."]
+
+[node name="collisionbox" type="CollisionShape2D" parent="collisionboxArea"]
+position = Vector2(0, 18)
+shape = SubResource("CircleShape2D_3kt5v")
+debug_color = Color(0.973788, 0, 0.43148, 0.42)
+
+[node name="collisionbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 18)
+shape = SubResource("CircleShape2D_3kt5v")
+
+[node name="cam" type="Camera2D" parent="."]
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_b8i01")
+}
+
+[node name="walk_dust" type="CPUParticles2D" parent="."]
+z_as_relative = false
+position = Vector2(0, 27)
+rotation = 3.14159
+emitting = false
+lifetime = 0.2
+explosiveness = 0.5
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 90.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 80.0
+initial_velocity_max = 80.0
+scale_amount_min = 4.0
+scale_amount_max = 8.0
+color_ramp = SubResource("Gradient_1n6iv")
+
+[node name="dash_effect" parent="." instance=ExtResource("4_tc2un")]
+
+[node name="invincibility_timer" type="Timer" parent="."]

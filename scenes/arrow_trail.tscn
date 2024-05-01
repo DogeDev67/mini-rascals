@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpwmvws3otv4u"]
+
+[ext_resource type="Script" path="res://scripts/effects/arrow_trail.gd" id="1_lx0ny"]
+
+[sub_resource type="Gradient" id="Gradient_8lj2d"]
+offsets = PackedFloat32Array(0, 0.12253, 0.418972)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0)
+
+[node name="arrow_trail" type="CPUParticles2D"]
+amount = 200
+lifetime = 2.0
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 40.0
+angle_min = 45.0
+angle_max = 45.0
+scale_amount_min = 6.0
+scale_amount_max = 6.0
+color_ramp = SubResource("Gradient_8lj2d")
+script = ExtResource("1_lx0ny")

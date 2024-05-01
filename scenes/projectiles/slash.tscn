@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cusx6b2f376nf"]
+
+[ext_resource type="Script" path="res://scripts/classes/Projectile.gd" id="1_8x5ro"]
+[ext_resource type="Texture2D" uid="uid://r3c5amlwgw2d" path="res://assets/sprites/projectiles/slash.png" id="2_qaxqw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acc5d"]
+size = Vector2(10, 16)
+
+[node name="slash" type="Area2D"]
+script = ExtResource("1_8x5ro")
+sprite = NodePath("Sprite2D")
+life_time = 0.1
+pierce = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qaxqw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 0)
+shape = SubResource("RectangleShape2D_acc5d")
